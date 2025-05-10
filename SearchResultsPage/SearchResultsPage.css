@@ -124,7 +124,7 @@ header {
 
 /* Hero section styles */
 .hero {
-    background-image: url(/assets/hero-pic.jpg);
+    background-image: url('/DzHouse%20Property%20Rental%20Website/assets/hero-pic.jpg');
     background-size: cover;
     background-position: center;
     height: 45vh;

@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (isValid) {
             alert('Booking confirmed! Thank you.');
-            window.location.href = '/index.html';
+            window.location.href = '/DzHouse%20Property%20Rental%20Website/index.php';
         } else {
             alert('Please check all required fields');
         }

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DZHouse - Find Your Perfect Stay</title>
-    <link rel="stylesheet" href="./OwnerAccountPage.css">
+    <link rel="stylesheet" href="/DzHouse%20Property%20Rental%20Website/OwnerAccountPage/OwnerAccountPage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 </head>
@@ -13,14 +13,14 @@
 <body>
     <!-- Header -->
     <header>
-        <a href="/" class="logo">DZHouse</a>
+        <a href="/DzHouse%20Property%20Rental%20Website" class="logo">DZHouse</a>
         <div class="nav-links">
-            <a href="#">Publish an ad</a>
-            <a href="#">Help</a>
-            <a href="#">travels</a>
-            <a href="/RegistrationPage/RegistrationPage.html">login </a>
+            <a href="/DzHouse%20Property%20Rental%20Website/AccommodationListingManagementPage/AccommodationListingManagementPage.php">Publish an ad</a>
+            <a href="/DzHouse%20Property%20Rental%20Website/TenantAccountPage/TenantAccountPage.php">Help</a>
+            <a href="/DzHouse%20Property%20Rental%20Website/OwnerAccountPage/OwnerAccountPage.php">travels</a>
+            <a href="/DzHouse%20Property%20Rental%20Website/RegistrationPage/RegistrationPage.php">login </a>
             <div class="user-icon">
-                <img src="/assets/user.png" alt="User Icon">
+                <img src="/DzHouse%20Property%20Rental%20Website/assets/user.png" alt="User Icon">
             </div>
         </div>
     </header>
@@ -171,7 +171,7 @@
     </footer>
 
 
-    <script src="./OwnerAccountPage.js"></script>
+    <script src="/DzHouse%20Property%20Rental%20Website/OwnerAccountPage/OwnerAccountPage.js"></script>
 </body>
 
 </html>

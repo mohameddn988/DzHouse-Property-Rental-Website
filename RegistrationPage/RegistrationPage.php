@@ -13,12 +13,12 @@
 <body>
     <!-- Header -->
     <header>
-        <a href="/DzHouse%20Property%20Rental%20Website/index.php" class="logo">DZHouse</a>
+        <a href="/DzHouse%20Property%20Rental%20Website" class="logo">DZHouse</a>
         <div class="nav-links">
-            <a href="#">Publish an ad</a>
-            <a href="#">Help</a>
-            <a href="#">travels</a>
-            <a href="#">login </a>
+            <a href="/DzHouse%20Property%20Rental%20Website/AccommodationListingManagementPage/AccommodationListingManagementPage.php">Publish an ad</a>
+            <a href="/DzHouse%20Property%20Rental%20Website/TenantAccountPage/TenantAccountPage.php">Help</a>
+            <a href="/DzHouse%20Property%20Rental%20Website/OwnerAccountPage/OwnerAccountPage.php">travels</a>
+            <a href="/DzHouse%20Property%20Rental%20Website/RegistrationPage/RegistrationPage.php">login </a>
             <div class="user-icon">
                 <img src="/DzHouse%20Property%20Rental%20Website/assets/user.png" alt="User Icon">
             </div>

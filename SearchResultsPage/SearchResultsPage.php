@@ -5,22 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DZHouse - Find Your Perfect Stay</title>
-    <link rel="stylesheet" href="./SearchResultsPage.css">
+    <link rel="stylesheet" href="/DzHouse%20Property%20Rental%20Website/SearchResultsPage/SearchResultsPage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+    <base href="/DzHouse%20Property%20Rental%20Website/">
 </head>
 
 <body>
     <!-- Header -->
     <header>
-        <a href="/" class="logo">DZHouse</a>
+        <a href="/DzHouse%20Property%20Rental%20Website" class="logo">DZHouse</a>
         <div class="nav-links">
-            <a href="#">Publish an ad</a>
-            <a href="#">Help</a>
-            <a href="#">travels</a>
-            <a href="#">login </a>
+            <a href="/DzHouse%20Property%20Rental%20Website/AccommodationListingManagementPage/AccommodationListingManagementPage.php">Publish an ad</a>
+            <a href="/DzHouse%20Property%20Rental%20Website/TenantAccountPage/TenantAccountPage.php">Help</a>
+            <a href="/DzHouse%20Property%20Rental%20Website/OwnerAccountPage/OwnerAccountPage.php">travels</a>
+            <a href="/DzHouse%20Property%20Rental%20Website/RegistrationPage/RegistrationPage.php">login </a>
             <div class="user-icon">
-                <img src="/assets/user.png" alt="User Icon">
+                <img src="/DzHouse%20Property%20Rental%20Website/assets/user.png" alt="User Icon">
             </div>
         </div>
     </header>
@@ -47,7 +47,7 @@
             <!-- Property 1 -->
             <div class="property-card">
                 <div class="property-image">
-                    <img src="/assets/property1.jpg" alt="Luxury apartment">
+                    <img src='assets/property1.jpg' alt="Luxury apartment">
                     <div class="image-nav">
                         <button><i class="fas fa-chevron-left"></i></button>
                         <button><i class="fas fa-chevron-right"></i></button>
@@ -223,7 +223,7 @@
         
             <div class="map-container">
                 <div id="map">
-                    <img src="/assets/SearchResultsPage assets/map.png"
+                    <img src="/DzHouse%20Property%20Rental%20Website/assets/SearchResultsPage assets/map.png"
                         alt="Map" class="map-image">
                     <div class="map-controls">
                         <button class="map-control-btn"><i class="fas fa-minus"></i></button>
@@ -275,6 +275,6 @@
     </footer>
     
     
-    <script src="./SearchResultsPage.js"></script>
+    <script src="/DzHouse%20Property%20Rental%20Website/SearchResultsPage/SearchResultsPage.js"></script>
 </body>
 </html>

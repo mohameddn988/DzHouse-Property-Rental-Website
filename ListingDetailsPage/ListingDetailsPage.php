@@ -4,20 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beautiful university apartment in Villeurbanne - DZHouse</title>
-    <link rel="stylesheet" href="/ListingDetailsPage/ListingDetailsPage.css">
+    <link rel="stylesheet" href="/DzHouse%20Property%20Rental%20Website/ListingDetailsPage/ListingDetailsPage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <!-- Header -->
     <header>
-        <a href="/index.html" class="logo">DZHouse</a>
+        <a href="/DzHouse%20Property%20Rental%20Website" class="logo">DZHouse</a>
         <div class="nav-links">
-            <a href="#">Publish an ad</a>
-            <a href="#">Help</a>
-            <a href="#">travels</a>
-            <a href="#">login </a>
+            <a href="/DzHouse%20Property%20Rental%20Website/AccommodationListingManagementPage/AccommodationListingManagementPage.php">Publish an ad</a>
+            <a href="/DzHouse%20Property%20Rental%20Website/TenantAccountPage/TenantAccountPage.php">Help</a>
+            <a href="/DzHouse%20Property%20Rental%20Website/OwnerAccountPage/OwnerAccountPage.php">travels</a>
+            <a href="/DzHouse%20Property%20Rental%20Website/RegistrationPage/RegistrationPage.php">login </a>
             <div class="user-icon">
-                <img src="../assets/user.png" alt="User Icon">
+                <img src="/DzHouse%20Property%20Rental%20Website/assets/user.png" alt="User Icon">
             </div>
         </div>
     </header>
@@ -116,7 +116,7 @@
                     <div class="instant-booking">
                         <span>👍</span> Instant booking !
                     </div>
-                    <button class="booking-button" onclick="window.location.href='/BookingPage/BookingPage.html'">Booking</button>
+                    <button class="booking-button" onclick="window.location.href='/DzHouse%20Property%20Rental%20Website/BookingPage/BookingPage.php'">Booking</button>
                 </div>
             </div>
         </div>
@@ -157,6 +157,6 @@
         </div>
     </footer>
 
-    <script src="/ListingDetailsPage/ListingDetailsPage.js"></script>
+    <script src="/DzHouse%20Property%20Rental%20Website/ListingDetailsPage/ListingDetailsPage.js"></script>
 </body>
 </html>

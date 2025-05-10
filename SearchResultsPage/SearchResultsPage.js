@@ -25,10 +25,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     propertyCards.forEach(card => {
         const images = [
-            '/assets/property1.jpg',
-            '/assets/property2.jpg', // Add your actual image paths
-            '/assets/property3.jpg',
-            '/assets/property4.jpg'
+            '/DzHouse%20Property%20Rental%20Website/assets/property1.jpg',
+            '/DzHouse%20Property%20Rental%20Website/assets/property2.jpg', // Add your actual image paths
+            '/DzHouse%20Property%20Rental%20Website/assets/property3.jpg',
+            '/DzHouse%20Property%20Rental%20Website/assets/property4.jpg'
         ];
         
         const mainImage = card.querySelector('.property-image img');
