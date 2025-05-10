@@ -1,8 +1,35 @@
+<?php
+require_once('../config/db.php');
+
+// Check if user is logged in as owner
+if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'owner') {
+    header("Location: /DzHouse%20Property%20Rental%20Website/RegistrationPage/RegistrationPage.php");
+    exit;
+}
+
+// Fetch owner data
+$stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+$stmt->execute([$_SESSION['user_id']]);
+$owner = $stmt->fetch();
+
+if (!$owner) {
+    header("Location: /DzHouse%20Property%20Rental%20Website/RegistrationPage/RegistrationPage.php");
+    exit;
+}
+
+// Split full name into first and last names
+$nameParts = explode(' ', $owner['name'], 2);
+$firstName = $nameParts[0];
+$lastName = $nameParts[1] ?? '';
+$addressParts = explode(', ', $owner['address'], 2);
+$streetAddress = $addressParts[0];
+$postalCode = $addressParts[1] ?? '';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <?php session_start(); ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DZHouse - Find Your Perfect Stay</title>
@@ -25,7 +52,13 @@
                 <a href="/DzHouse%20Property%20Rental%20Website/RegistrationPage/RegistrationPage.php">Login</a>
             <?php endif; ?>
             <div class="user-icon">
-                <img src="/DzHouse%20Property%20Rental%20Website/assets/user.png" alt="User Icon">
+                <?php if(isset($_SESSION['user_id'])): ?>
+                    <a href="<?= $_SESSION['user_type'] === 'tenant' ? '/DzHouse%20Property%20Rental%20Website/TenantAccountPage/TenantAccountPage.php' : '/DzHouse%20Property%20Rental%20Website/OwnerAccountPage/OwnerAccountPage.php' ?>">
+                        <img src="/DzHouse%20Property%20Rental%20Website/config/db.php?get_image&id=<?= $_SESSION['user_id'] ?>&type=profile&t=<?= time() ?>" alt="Profile Icon">
+                    </a>
+                <?php else: ?>
+                    <img src="/DzHouse%20Property%20Rental%20Website/assets/user.png" alt="User Icon">
+                <?php endif; ?>
             </div>
         </div>
     </header>
@@ -39,24 +72,24 @@
                 <div class="panel-header">Profile:</div>
                 <div class="panel-body">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Name">
+                        <input type="text" class="form-control" value="<?= htmlspecialchars($firstName) ?>" readonly>                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" value="<?= htmlspecialchars($lastName) ?>" readonly>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Family name">
-                    </div>
+                        <input type="text" class="form-control" value="<?= htmlspecialchars($streetAddress) ?>" readonly>                    </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Adress">
-                    </div>
+                        <input type="email" class="form-control" value="<?= htmlspecialchars($owner['email']) ?>" readonly>                    </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" placeholder="Email">
-                    </div>
-                    <div class="form-group">
-                        <input type="tel" class="form-control" placeholder="Phone">
-                    </div>
+                        <input type="tel" class="form-control" value="<?= htmlspecialchars($owner['phone']) ?>" readonly>                    </div>
                     
-                    <div class="photo-buttons">
-                        <button class="photo-button">ID photo</button>
-                        <button class="photo-button">Profile photo</button>
+                        <div class="photo-buttons">
+                        <button class="photo-button" data-photo-type="id" data-user-id="<?= $_SESSION['user_id'] ?>">
+                            ID photo
+                        </button>
+                        <button class="photo-button" data-photo-type="profile" data-user-id="<?= $_SESSION['user_id'] ?>">
+                            Profile photo
+                        </button>
                     </div>
                 </div>
             </div>

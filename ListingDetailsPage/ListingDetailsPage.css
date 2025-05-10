@@ -39,7 +39,7 @@ header {
     gap: 1.5rem;
 }
 
-.nav-links a {
+.nav-links a:not(.user-icon a) {
     color: #1e60c8;
     margin-left: 3rem;
 }
@@ -55,21 +55,49 @@ header {
 
 .user-icon {
     width: 3rem;
-    /* Adjusted size */
     height: 3rem;
-    /* Adjusted size */
-    border-radius: 50%;
-    overflow: hidden;
-    /* Ensures the image fits within the circle */
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.user-icon:hover {
+    transform: scale(1.1);
+    text-decoration: none !important;
+}
+
+.user-icon a {
+    display: block;
+    /* Remove default link styling */
+    width: 100%;
+    height: 100%;
+    text-decoration: none !important;
+    /* Remove underline */
+    border: none !important;
+    /* Remove any borders */
 }
 
 .user-icon img {
     width: 100%;
-    /* Ensures the image scales to fit */
     height: 100%;
-    /* Ensures the image scales to fit */
     object-fit: cover;
-    /* Maintains aspect ratio and fills the container */
+    display: block;
+    background-color: #f0f0f0;
+    border: 2px solid #fff;
+    border-radius: 50%;
+
+}
+
+.user-icon img[src=""] {
+    visibility: hidden;
+}
+
+.user-icon img[src=""]:after {
+    content: "";
+    visibility: visible;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: #f0f0f0;
 }
 
 @media (max-width: 768px) {

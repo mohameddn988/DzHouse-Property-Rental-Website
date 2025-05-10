@@ -33,8 +33,43 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Profile photo button
     const profilePhotoBtn = document.querySelector('.photo-button');
+    
     profilePhotoBtn.addEventListener('click', function() {
-    alert('Upload a profile photo');
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        
+        input.onchange = async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            try {
+                const formData = new FormData();
+                formData.append('profilePhoto', file);
+                formData.append('userId', profilePhotoBtn.dataset.userId); // Get userId from data attribute
+                
+                const response = await fetch('/DzHouse%20Property%20Rental%20Website/config/update_profile.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Refresh the image without reloading the page
+                    const profileImg = document.querySelector('.photo-buttons img');
+                    profileImg.src = profileImg.src.split('?')[0] + '?t=' + Date.now();
+                    alert('Profile photo updated successfully!');
+                } else {
+                    throw new Error(result.message || 'Failed to update photo');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error updating profile photo: ' + error.message);
+            }
+        };
+        
+        input.click();
     });
 
     // Review functionality

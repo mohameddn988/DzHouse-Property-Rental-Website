@@ -1,8 +1,33 @@
+<?php
+require_once('../config/db.php');
+
+// Check if user is logged in as tenant
+if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'tenant') {
+    header("Location: /DzHouse%20Property%20Rental%20Website/RegistrationPage/RegistrationPage.php");
+    exit;
+}
+
+// Fetch tenant data from database
+$stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+$stmt->execute([$_SESSION['user_id']]);
+$tenant = $stmt->fetch();
+
+// If no user found, redirect to login
+if (!$tenant) {
+    header("Location: /DzHouse%20Property%20Rental%20Website/RegistrationPage/RegistrationPage.php");
+    exit;
+}
+
+// Extract first and last name (assuming format "FirstName LastName")
+$nameParts = explode(' ', $tenant['name'], 2);
+$firstName = $nameParts[0];
+$lastName = $nameParts[1] ?? '';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <?php session_start(); ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DZHouse - Find Your Perfect Stay</title>
@@ -25,8 +50,13 @@
                 <a href="/DzHouse%20Property%20Rental%20Website/RegistrationPage/RegistrationPage.php">Login</a>
             <?php endif; ?>
             <div class="user-icon">
-                <img src="/DzHouse%20Property%20Rental%20Website/assets/user.png" alt="User Icon">
-            </div>
+                <?php if(isset($_SESSION['user_id'])): ?>
+                    <a href="<?= $_SESSION['user_type'] === 'tenant' ? '/DzHouse%20Property%20Rental%20Website/TenantAccountPage/TenantAccountPage.php' : '/DzHouse%20Property%20Rental%20Website/OwnerAccountPage/OwnerAccountPage.php' ?>">
+                        <img src="/DzHouse%20Property%20Rental%20Website/config/db.php?get_image&id=<?= $_SESSION['user_id'] ?>&type=profile&t=<?= time() ?>" alt="Profile Icon">
+                    </a>
+                <?php else: ?>
+                    <img src="/DzHouse%20Property%20Rental%20Website/assets/user.png" alt="User Icon">
+                <?php endif; ?>            </div>
         </div>
     </header>
 
@@ -40,21 +70,21 @@
                 <div class="panel-header">Profile:</div>
                 <div class="panel-body">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Name">
+                        <input type="text" class="form-control" value="<?= htmlspecialchars($firstName) ?>" readonly>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Family name">
+                        <input type="text" class="form-control" value="<?= htmlspecialchars($lastName) ?>" readonly>
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" placeholder="Email">
+                        <input type="email" class="form-control" value="<?= htmlspecialchars($tenant['email']) ?>" readonly>
                     </div>
                     <div class="form-group">
-                        <input type="tel" class="form-control" placeholder="Phone">
+                        <input type="tel" class="form-control" value="<?= htmlspecialchars($tenant['phone']) ?>" readonly>
                     </div>
                     
                     <div class="photo-buttons">
-                        <img src="/DzHouse%20Property%20Rental%20Website/assets/user.png" alt="">
-                        <button class="photo-button">Profile photo</button>
+                        <img src="/DzHouse%20Property%20Rental%20Website/config/db.php?get_image&id=<?= $_SESSION['user_id'] ?>&type=profile" alt="Profile Photo">
+                        <button class="photo-button" data-user-id="<?= $_SESSION['user_id'] ?>">Profile photo</button>
                     </div>
                 </div>
             </div>

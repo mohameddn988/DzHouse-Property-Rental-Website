@@ -21,6 +21,56 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Photo upload functionality
+    const photoButtons = document.querySelectorAll('.photo-button');
+    
+    photoButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const photoType = this.dataset.photoType;
+            const userId = this.dataset.userId;
+            
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            
+            input.onchange = async (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                try {
+                    const formData = new FormData();
+                    // Use correct field name based on photo type
+                    formData.append(photoType === 'id' ? 'idPhoto' : 'profilePhoto', file);
+                    formData.append('userId', userId);
+                    formData.append('photoType', photoType);
+                    
+                    const response = await fetch('/DzHouse%20Property%20Rental%20Website/config/update_profile.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        // Refresh the relevant image
+                        if (photoType === 'profile') {
+                            const profileImg = document.querySelector('.user-icon img');
+                            profileImg.src = profileImg.src.split('?')[0] + '?t=' + Date.now();
+                        }
+                        alert('Photo updated successfully!');
+                    } else {
+                        throw new Error(result.message || 'Failed to update photo');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Error updating photo: ' + error.message);
+                }
+            };
+            
+            input.click();
+        });
+    });
+
     // Announcements functionality (enhanced)
     const announcementsPanel = document.querySelector('.right-column .panel:first-child .panel-body');
     const addAnnouncementBtn = document.querySelector('.panel-header .btn-success');

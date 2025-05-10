@@ -43,18 +43,6 @@ try {
         exit;
     }
 
-    // Connection test output (only shown for GET requests)
-    echo "✅ Database connection successful!\n\n";
-    echo "📊 Tables in 'dzhouse' database:\n";
-    
-    $tables = $pdo->query("SHOW TABLES")->fetchAll(PDO::FETCH_COLUMN);
-    print_r($tables);
-
-    if (in_array('users', $tables)) {
-        echo "\n👥 Users table sample data:\n";
-        $users = $pdo->query("SELECT id, type, email FROM users LIMIT 3")->fetchAll();
-        print_r($users);
-    }
 
 } catch (PDOException $e) {
     die("Database connection failed: " . $e->getMessage());
@@ -155,6 +143,10 @@ function handleRegistration($data) {
 
 // Image retrieval endpoint
 if (isset($_GET['get_image'])) {
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+    header("Cache-Control: post-check=0, pre-check=0", false);
+    header("Pragma: no-cache");
+    
     $userId = (int)$_GET['id'];
     $photoType = $_GET['type'] ?? 'profile'; // 'profile' or 'id'
     
@@ -165,6 +157,9 @@ if (isset($_GET['get_image'])) {
     
     if ($photo) {
         header("Content-Type: image/jpeg");
+        header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+        header("Cache-Control: post-check=0, pre-check=0", false);
+        header("Pragma: no-cache");
         echo $photo;
     } else {
         header("Content-Type: image/png");

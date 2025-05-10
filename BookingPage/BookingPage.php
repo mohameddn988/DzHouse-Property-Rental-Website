@@ -25,7 +25,13 @@
                 <a href="/DzHouse%20Property%20Rental%20Website/RegistrationPage/RegistrationPage.php">Login</a>
             <?php endif; ?>
             <div class="user-icon">
-                <img src="/DzHouse%20Property%20Rental%20Website/assets/user.png" alt="User Icon">
+                <?php if(isset($_SESSION['user_id'])): ?>
+                    <a href="<?= $_SESSION['user_type'] === 'tenant' ? '/DzHouse%20Property%20Rental%20Website/TenantAccountPage/TenantAccountPage.php' : '/DzHouse%20Property%20Rental%20Website/OwnerAccountPage/OwnerAccountPage.php' ?>">
+                        <img src="/DzHouse%20Property%20Rental%20Website/config/db.php?get_image&id=<?= $_SESSION['user_id'] ?>&type=profile&t=<?= time() ?>" alt="Profile Icon">
+                    </a>
+                <?php else: ?>
+                    <img src="/DzHouse%20Property%20Rental%20Website/assets/user.png" alt="User Icon">
+                <?php endif; ?>
             </div>
         </div>
     </header>
