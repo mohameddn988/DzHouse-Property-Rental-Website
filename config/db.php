@@ -58,10 +58,6 @@ try {
     die("Database connection failed: " . $e->getMessage());
 }
 
-// Algerian currency format helper
-function format_da($amount) {
-    return number_format($amount, 0, ',', ' ') . ' DA';
-}
 
 // Registration handler
 function handleRegistration($data) {

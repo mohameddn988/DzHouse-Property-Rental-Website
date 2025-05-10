@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DZHouse - Find Your Perfect Stay</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/DzHouse%20Property%20Rental%20Website/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 </head>
@@ -15,12 +15,12 @@
     <header>
         <a href="/" class="logo">DZHouse</a>
         <div class="nav-links">
-            <a href="/AccommodationListingManagementPage/AccommodationListingManagementPage.html">Publish an ad</a>
-            <a href="/TenantAccountPage/TenantAccountPage.html">Help</a>
-            <a href="/OwnerAccountPage/OwnerAccountPage.html">travels</a>
+            <a href="/DzHouse%20Property%20Rental%20Website/AccommodationListingManagementPage/AccommodationListingManagementPage.html">Publish an ad</a>
+            <a href="/DzHouse%20Property%20Rental%20Website/TenantAccountPage/TenantAccountPage.html">Help</a>
+            <a href="/DzHouse%20Property%20Rental%20Website/OwnerAccountPage/OwnerAccountPage.html">travels</a>
             <a href="/DzHouse%20Property%20Rental%20Website/RegistrationPage/RegistrationPage.php">login </a>
             <div class="user-icon">
-                <img src="assets/user.png" alt="User Icon">
+                <img src="/DzHouse%20Property%20Rental%20Website/assets/user.png" alt="User Icon">
             </div>
         </div>
     </header>
@@ -37,7 +37,7 @@
             <div class="search-input">
                 <input type="number" placeholder="People" class="search-input">
             </div>
-            <button class="search-button" onclick="window.location.href='./SearchResultsPage/SearchResultsPage.html'">Search</button>
+            <button class="search-button" onclick="window.location.href='/DzHouse%20Property%20Rental%20Website/SearchResultsPage/SearchResultsPage.php'">Search</button>
         </div>
     </div>
 
@@ -45,9 +45,9 @@
     <div class="listings-container">
         <div class="property-grid">
             <!-- Property 1 -->
-            <a href="./ListingDetailsPage/ListingDetailsPage.html" class="property-card">
+            <a href="/DzHouse%20Property%20Rental%20Website/ListingDetailsPage/ListingDetailsPage.php" class="property-card">
                 <div class="property-image"
-                    style="background-image: url(/assets/property1.jpg)">
+                    style="background-image: url(/DzHouse%20Property%20Rental%20Website/assets/property1.jpg)">
                     <button class="heart-button" onclick="event.stopPropagation();">
                         <i class="far fa-heart"></i>
                     </button>
@@ -67,9 +67,9 @@
             </a>
     
             <!-- Property 2 -->
-            <a href="./ListingDetailsPage/ListingDetailsPage.html" class="property-card">
+            <a href="/DzHouse%20Property%20Rental%20Website/ListingDetailsPage/ListingDetailsPage.html" class="property-card">
                 <div class="property-image"
-                    style="background-image: url(/assets/property2.jpg)">
+                    style="background-image: url(/DzHouse%20Property%20Rental%20Website/assets/property2.jpg)">
                     <button class="heart-button">
                         <i class="far fa-heart"></i>
                     </button>
@@ -89,9 +89,9 @@
             </a>
     
             <!-- Property 3 -->
-            <a href="./ListingDetailsPage/ListingDetailsPage.html" class="property-card">
+            <a href="/DzHouse%20Property%20Rental%20Website/ListingDetailsPage/ListingDetailsPage.php" class="property-card">
                 <div class="property-image"
-                    style="background-image: url(/assets/property3.jpg)">
+                    style="background-image: url(/DzHouse%20Property%20Rental%20Website/assets/property3.jpg)">
                     <button class="heart-button">
                         <i class="far fa-heart"></i>
                     </button>
@@ -111,9 +111,9 @@
             </a>
     
             <!-- Property 4 -->
-            <a href="./ListingDetailsPage/ListingDetailsPage.html" class="property-card">
+            <a href="/DzHouse%20Property%20Rental%20Website/ListingDetailsPage/ListingDetailsPage.php" class="property-card">
                 <div class="property-image"
-                    style="background-image: url(/assets/property4.jpg)">
+                    style="background-image: url(/DzHouse%20Property%20Rental%20Website/assets/property4.jpg)">
                     <button class="heart-button">
                         <i class="far fa-heart"></i>
                     </button>
@@ -133,9 +133,9 @@
             </a>
 
             <!-- Property 5 -->
-            <a href="./ListingDetailsPage/ListingDetailsPage.html" class="property-card">
+            <a href="/DzHouse%20Property%20Rental%20Website/ListingDetailsPage/ListingDetailsPage.php" class="property-card">
                 <div class="property-image"
-                    style="background-image: url(/assets/property4.jpg)">
+                    style="background-image: url(/DzHouse%20Property%20Rental%20Website/assets/property4.jpg)">
                     <button class="heart-button">
                         <i class="far fa-heart"></i>
                     </button>
