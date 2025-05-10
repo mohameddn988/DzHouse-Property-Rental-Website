@@ -1,0 +1,168 @@
+<?php
+// Database configuration (XAMPP default)
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'dzhouse');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+
+// Establish connection
+try {
+    $pdo = new PDO(
+        "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
+        DB_USER,
+        DB_PASS,
+        [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+        ]
+    );
+
+    // Handle registration if POST request
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user-type'])) {
+        header('Content-Type: application/json');
+        
+        $data = [
+            'type' => $_POST['user-type'],
+            'name' => $_POST['name'],
+            'familyName' => $_POST['familyName'],
+            'countryCode' => $_POST['countryCode'],
+            'phone' => $_POST['phone'],
+            'email' => $_POST['email'],
+            'password' => $_POST['password'],
+            'address' => $_POST['address'],
+            'postalCode' => $_POST['postalCode'],
+            'rib' => $_POST['rib'],
+            'idPhoto' => $_FILES['idPhoto'] ?? null,
+            'profilePhoto' => $_FILES['profilePhoto'] ?? null
+        ];
+        
+        $result = handleRegistration($data);
+        echo json_encode($result);
+        exit;
+    }
+
+    // Connection test output (only shown for GET requests)
+    echo "✅ Database connection successful!\n\n";
+    echo "📊 Tables in 'dzhouse' database:\n";
+    
+    $tables = $pdo->query("SHOW TABLES")->fetchAll(PDO::FETCH_COLUMN);
+    print_r($tables);
+
+    if (in_array('users', $tables)) {
+        echo "\n👥 Users table sample data:\n";
+        $users = $pdo->query("SELECT id, type, email FROM users LIMIT 3")->fetchAll();
+        print_r($users);
+    }
+
+} catch (PDOException $e) {
+    die("Database connection failed: " . $e->getMessage());
+}
+
+// Algerian currency format helper
+function format_da($amount) {
+    return number_format($amount, 0, ',', ' ') . ' DA';
+}
+
+// Registration handler
+function handleRegistration($data) {
+    global $pdo;
+    
+    // First check if email exists (for both login and registration)
+    $stmt = $pdo->prepare("SELECT id, type, password FROM users WHERE email = ?");
+    $stmt->execute([$data['email']]);
+    $existingUser = $stmt->fetch();
+
+    // LOGIN FLOW (email exists)
+    if ($existingUser) {
+        // Verify password (plaintext comparison as per your requirement)
+        if ($data['password'] === $existingUser['password']) {
+            return [
+                'success' => true,
+                'userId' => $existingUser['id'],
+                'userType' => $existingUser['type'],
+                'action' => 'login'
+            ];
+        } else {
+            return ['success' => false, 'message' => 'Incorrect password'];
+        }
+    }
+    // REGISTRATION FLOW (new user)
+    else {
+        // Validate required fields
+        $required = ['type', 'name', 'email', 'password', 'phone'];
+        foreach ($required as $field) {
+            if (empty($data[$field])) {
+                return ['success' => false, 'message' => "$field is required"];
+            }
+        }
+
+        // Owner-specific validations
+        if ($data['type'] === 'owner') {
+            if (empty($_FILES['idPhoto']['tmp_name'])) {
+                return ['success' => false, 'message' => 'ID photo is required for owners'];
+            }
+            if (empty($data['address'])) {
+                return ['success' => false, 'message' => 'Address is required for owners'];
+            }
+        }
+
+        // Handle file uploads
+        $profilePhotoData = !empty($_FILES['profilePhoto']['tmp_name']) 
+            ? file_get_contents($_FILES['profilePhoto']['tmp_name']) 
+            : null;
+        
+        $idPhotoData = !empty($_FILES['idPhoto']['tmp_name']) 
+            ? file_get_contents($_FILES['idPhoto']['tmp_name']) 
+            : null;
+
+        // Insert new user
+        try {
+            $stmt = $pdo->prepare("
+                INSERT INTO users 
+                (type, name, email, password, phone, profile_photo, id_photo, address, bank_info)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ");
+            
+            $stmt->execute([
+                $data['type'],
+                $data['name'] . ' ' . $data['familyName'],
+                $data['email'],
+                $data['password'], // Stored plaintext (NOT RECOMMENDED)
+                $data['countryCode'] . $data['phone'],
+                $profilePhotoData,
+                $idPhotoData,
+                $data['address'] . ', ' . $data['postalCode'],
+                $data['rib']
+            ]);
+
+            return [
+                'success' => true,
+                'userId' => $pdo->lastInsertId(),
+                'userType' => $data['type'],
+                'action' => 'register'
+            ];
+        } catch (PDOException $e) {
+            return ['success' => false, 'message' => 'Database error: ' . $e->getMessage()];
+        }
+    }
+}
+
+// Image retrieval endpoint
+if (isset($_GET['get_image'])) {
+    $userId = (int)$_GET['id'];
+    $photoType = $_GET['type'] ?? 'profile'; // 'profile' or 'id'
+    
+    $column = ($photoType === 'id') ? 'id_photo' : 'profile_photo';
+    $stmt = $pdo->prepare("SELECT $column FROM users WHERE id = ?");
+    $stmt->execute([$userId]);
+    $photo = $stmt->fetchColumn();
+    
+    if ($photo) {
+        header("Content-Type: image/jpeg");
+        echo $photo;
+    } else {
+        header("Content-Type: image/png");
+        readfile(__DIR__.'/../assets/default_' . $photoType . '.png');
+    }
+    exit;
+}

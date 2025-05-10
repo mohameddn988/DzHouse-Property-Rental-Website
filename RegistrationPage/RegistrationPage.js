@@ -10,12 +10,15 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Handle file uploads and show filenames
-    document.getElementById('profilePhoto').addEventListener('change', function(e) {
+    const profilePhotoInput = document.getElementById('profilePhoto');
+    const idPhotoInput = document.getElementById('idPhoto');
+    
+    profilePhotoInput.addEventListener('change', function(e) {
         const fileName = e.target.files[0]?.name || "No file chosen";
         document.getElementById('profilePhotoName').textContent = fileName;
     });
     
-    document.getElementById('idPhoto').addEventListener('change', function(e) {
+    idPhotoInput.addEventListener('change', function(e) {
         const fileName = e.target.files[0]?.name || "No file chosen";
         document.getElementById('idPhotoName').textContent = fileName;
     });
@@ -34,8 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
     tenantRadio.addEventListener('change', updateFormTitle);
     ownerRadio.addEventListener('change', updateFormTitle);
 
-    // Form validation
-    form.addEventListener('submit', function(e) {
+    // Form validation and submission
+    form.addEventListener('submit', async function(e) {
         e.preventDefault();
         let isValid = true;
         resetErrors();
@@ -65,27 +68,72 @@ document.addEventListener('DOMContentLoaded', function() {
         // Validate password strength
         const passwordInput = document.getElementById('password');
         if (passwordInput.value && passwordInput.value.length < 8) {
-            alert('Password must be at least 8 characters');
+            showError(passwordInput, 'Password must be at least 8 characters');
             isValid = false;
         }
 
-        if (isValid) {
-            // Prepare form data
-            const formData = {
-                userType: tenantRadio.checked ? 'tenant' : 'owner',
-                name: document.getElementById('name').value,
-                familyName: document.getElementById('familyName').value,
-                phone: countryCode + phoneInput.value,
-                email: document.getElementById('email').value,
-                password: document.getElementById('password').value,
-                address: document.getElementById('address').value,
-                postalCode: document.getElementById('postalCode').value,
-                rib: document.getElementById('rib').value
-            };
+        // Owner-specific validation
+        if (ownerRadio.checked && !idPhotoInput.files[0]) {
+            showError(idPhotoInput, 'ID photo is required for owners');
+            isValid = false;
+        }
+
+        if (!isValid) return;
+
+        try {
+            // Prepare FormData (supports file uploads)
+            const formData = new FormData();
             
-            console.log('Form data:', formData);
-            alert('Subscription successful! Welcome to DZHouse.');
-            // form.submit(); // Uncomment for real form submission
+            // Add form data
+            formData.append('user-type', tenantRadio.checked ? 'tenant' : 'owner');
+            formData.append('name', document.getElementById('name').value);
+            formData.append('familyName', document.getElementById('familyName').value);
+            formData.append('countryCode', countryCode);
+            formData.append('phone', phoneInput.value);
+            formData.append('email', document.getElementById('email').value);
+            formData.append('password', document.getElementById('password').value);
+            formData.append('address', document.getElementById('address').value);
+            formData.append('postalCode', document.getElementById('postalCode').value);
+            formData.append('rib', document.getElementById('rib').value);
+
+            // Add files if they exist
+            if (profilePhotoInput.files[0]) {
+                formData.append('profilePhoto', profilePhotoInput.files[0]);
+            }
+            if (idPhotoInput.files[0]) {
+                formData.append('idPhoto', idPhotoInput.files[0]);
+            }
+
+            // Send to PHP backend
+            const response = await fetch('/DzHouse%20Property%20Rental%20Website/config/db.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                // Redirect based on user type
+                if (result.userType === 'tenant') {
+                    window.location.href = '/DzHouse%20Property%20Rental%20Website/TenantAccountPage/TenantAccountPage.php';
+                } else {
+                    window.location.href = '/DzHouse%20Property%20Rental%20Website/OwnerAccountPage/OwnerAccountPage.php';  
+                }
+                
+                // Store user session (optional)
+                localStorage.setItem('userId', result.userId);
+            } else {
+                // Show error messages
+                if (result.message.includes('already exists')) {
+                    alert('Email already registered! Please login instead.');
+                } else {
+                    alert('Error: ' + result.message);
+                }
+            }
+
+        } catch (error) {
+            alert('Error: ' + error.message);
+            console.error('Registration error:', error);
         }
     });
 
@@ -95,9 +143,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const errorElement = document.createElement('div');
         errorElement.className = 'error-message';
         errorElement.textContent = message;
-        
-        // Insert after the input
         input.parentNode.insertBefore(errorElement, input.nextSibling);
     }
 
+    function resetErrors() {
+        document.querySelectorAll('.error').forEach(el => {
+            el.classList.remove('error');
+        });
+        document.querySelectorAll('.error-message').forEach(el => {
+            el.remove();
+        });
+    }
 });

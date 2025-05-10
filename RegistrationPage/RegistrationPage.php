@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DZHouse - Find Your Perfect Stay</title>
-    <link rel="stylesheet" href="/RegistrationPage/RegistrationPage.css">
+    <link rel="stylesheet" href="/DzHouse%20Property%20Rental%20Website/RegistrationPage/RegistrationPage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 </head>
@@ -13,14 +13,14 @@
 <body>
     <!-- Header -->
     <header>
-        <a href="/" class="logo">DZHouse</a>
+        <a href="/DzHouse%20Property%20Rental%20Website/index.php" class="logo">DZHouse</a>
         <div class="nav-links">
             <a href="#">Publish an ad</a>
             <a href="#">Help</a>
             <a href="#">travels</a>
             <a href="#">login </a>
             <div class="user-icon">
-                <img src="/assets/user.png" alt="User Icon">
+                <img src="/DzHouse%20Property%20Rental%20Website/assets/user.png" alt="User Icon">
             </div>
         </div>
     </header>
@@ -47,8 +47,8 @@
                 </div>
         
                 <div class="form-row">
-                    <input type="text" id="name" placeholder="Name" required>
-                    <input type="text" id="familyName" placeholder="Family name" required>
+                    <input type="text" id="name" placeholder="Name">
+                    <input type="text" id="familyName" placeholder="Family name">
                 </div>
                 
                 <div class="form-row phone-row">
@@ -64,15 +64,15 @@
                         <option value="+61">+61 (Australia)</option>
                         <option value="+55">+55 (Brazil)</option>
                     </select>
-                    <input type="tel" class="large" placeholder="Phone" required>
+                    <input type="tel" class="large" placeholder="Phone">
                 </div>
                 
                 <div class="form-row">
-                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="email" id="email" placeholder="Email">
                 </div>
                 
                 <div class="form-row">
-                    <input type="password" id="password" placeholder="Password" required>
+                    <input type="password" id="password" placeholder="Password">
                 </div>
                 
                 
@@ -94,12 +94,12 @@
                 </div>
 
                 <div class="form-row sup">
-                    <input type="text" id="address" placeholder="Address" required>
-                    <input type="number" id="postalCode" placeholder="Postal code" required>
+                    <input type="text" id="address" placeholder="Address">
+                    <input type="number" id="postalCode" placeholder="Postal code">
                 </div>
             
                 <div class="form-row">
-                    <input type="text" id="rib" placeholder="RIB" required>
+                    <input type="text" id="rib" placeholder="RIB" >
                 </div>
                 
                 <button type="submit" class="subscribe-btn">Subscribe</button>
@@ -142,7 +142,7 @@
         </div>
     </footer>
 
-    <script src="./RegistrationPage.js"></script>
+    <script src="/DzHouse%20Property%20Rental%20Website/RegistrationPage/RegistrationPage.js"></script>
     
 </body>
 </html>

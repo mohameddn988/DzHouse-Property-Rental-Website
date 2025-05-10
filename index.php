@@ -18,7 +18,7 @@
             <a href="/AccommodationListingManagementPage/AccommodationListingManagementPage.html">Publish an ad</a>
             <a href="/TenantAccountPage/TenantAccountPage.html">Help</a>
             <a href="/OwnerAccountPage/OwnerAccountPage.html">travels</a>
-            <a href="/RegistrationPage/RegistrationPage.html">login </a>
+            <a href="/DzHouse%20Property%20Rental%20Website/RegistrationPage/RegistrationPage.php">login </a>
             <div class="user-icon">
                 <img src="assets/user.png" alt="User Icon">
             </div>
