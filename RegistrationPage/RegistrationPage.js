@@ -119,9 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     window.location.href = '/DzHouse%20Property%20Rental%20Website/OwnerAccountPage/OwnerAccountPage.php';  
                 }
-                
-                // Store user session (optional)
-                localStorage.setItem('userId', result.userId);
+            
             } else {
                 // Show error messages
                 if (result.message.includes('already exists')) {
@@ -143,7 +141,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const errorElement = document.createElement('div');
         errorElement.className = 'error-message';
         errorElement.textContent = message;
-        input.parentNode.insertBefore(errorElement, input.nextSibling);
+        
+        // Find the form row container
+        const formRow = input.closest('.form-row') || input.parentNode;
+        
+        // Insert after the entire form row (including the button)
+        formRow.parentNode.insertBefore(errorElement, formRow.nextSibling);
     }
 
     function resetErrors() {

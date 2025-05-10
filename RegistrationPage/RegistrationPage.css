@@ -263,6 +263,13 @@ header {
     transition: background-color 0.3s ease;
 }
 
+.error-message {
+    display: block;
+    color: red;
+    margin-top: 5px;
+    width: 100%;
+}
+
 .subscribe-btn:hover {
     background-color: #1e4c8c;
 }

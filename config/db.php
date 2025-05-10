@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 // Database configuration (XAMPP default)
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'dzhouse');
@@ -72,6 +74,10 @@ function handleRegistration($data) {
     if ($existingUser) {
         // Verify password (plaintext comparison as per your requirement)
         if ($data['password'] === $existingUser['password']) {
+            // Set session variables
+            $_SESSION['user_id'] = $existingUser['id'];
+            $_SESSION['user_type'] = $existingUser['type'];
+
             return [
                 'success' => true,
                 'userId' => $existingUser['id'],
@@ -130,6 +136,10 @@ function handleRegistration($data) {
                 $data['address'] . ', ' . $data['postalCode'],
                 $data['rib']
             ]);
+
+            // Set session variables
+            $_SESSION['user_id'] = $pdo->lastInsertId();
+            $_SESSION['user_type'] = $data['type'];
 
             return [
                 'success' => true,
