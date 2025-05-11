@@ -141,6 +141,15 @@ function handleRegistration($data) {
     }
 }
 
+if (isset($_GET['check-email'])) {
+    header('Content-Type: application/json');
+    $email = $_GET['email'];
+    $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
+    $stmt->execute([$email]);
+    echo json_encode(['exists' => (bool)$stmt->fetch()]);
+    exit;
+}
+
 // Image retrieval endpoint
 if (isset($_GET['get_image'])) {
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");

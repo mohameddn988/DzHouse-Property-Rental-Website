@@ -37,9 +37,23 @@ document.addEventListener('DOMContentLoaded', function() {
     tenantRadio.addEventListener('change', updateFormTitle);
     ownerRadio.addEventListener('change', updateFormTitle);
 
+    
+
     // Form validation and submission
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
+
+        let isExistingUser = false;
+        try {
+            const email = document.getElementById('email').value;
+            const emailCheck = await fetch(`/DzHouse%20Property%20Rental%20Website/config/db.php?check-email&email=${encodeURIComponent(email)}`);
+            const result = await emailCheck.json();
+            isExistingUser = result.exists;
+            document.getElementById('email').dataset.exists = isExistingUser;
+        } catch (error) {
+            console.error('Email check failed:', error);
+        }
+
         let isValid = true;
         resetErrors();
 
@@ -73,8 +87,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Owner-specific validation
-        if (ownerRadio.checked && !idPhotoInput.files[0]) {
-            showError(idPhotoInput, 'ID photo is required for owners');
+        if (ownerRadio.checked && !isExistingUser && !idPhotoInput.files[0]) {
+            showError(idPhotoInput, 'ID photo is required for owner registration');
             isValid = false;
         }
 
